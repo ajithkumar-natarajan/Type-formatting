@@ -1,4 +1,5 @@
-package com.zoho.typeformatting;
+package com.zoho.typeformattingv2;
 
 public interface FormatChoices {
-} 
+
+}

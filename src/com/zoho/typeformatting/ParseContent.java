@@ -1,65 +1,17 @@
-package com.zoho.typeformatting;
+package com.zoho.typeformattingv2;
 
 public class ParseContent {
-	
-	enum ParseDataType{
+	enum DataType{
 		Number, Date;
 	}
-	public static String parse(Enum<ParseDataType> parseDataType, String dataInput) throws Exception {
-		ParseDataType dataType = (ParseDataType) parseDataType;
-		switch (dataType) {
+	
+	public static String parse(DataType parseDataType, String dataInput) {
+		switch (parseDataType) {
 		case Number:
-		{
-			int flag = 0;
-			for(int iterator = 0; iterator<dataInput.split(",").length;iterator++) {
-				if(iterator == 0)
-					if(Integer.parseInt(dataInput.split(",")[iterator])<100) {
-						continue;
-					}
-					else if(Integer.parseInt(dataInput.split(",")[iterator])<1000) {
-						flag = 2;
-						continue;
-					}
-					else {
-						try {
-							throw new Exception("Number-format mismatch");
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				else if(iterator != (dataInput.split(",").length-1))
-					if((Integer.parseInt(dataInput.split(",")[iterator])<100 && dataInput.split(",")[iterator].length()>1) && (flag==0 || flag==1)) {
-						flag = 1;
-						continue;
-					}
-					else if((Integer.parseInt(dataInput.split(",")[iterator])<1000 && dataInput.split(",")[iterator].length()>2) && (flag==0 || flag==2)) {
-						flag = 2;
-						continue;
-					}
-					else {
-						try {
-							throw new Exception("Number-format mismatch");
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				else
-					if(Integer.parseInt(dataInput.split(",")[iterator])<1000 && dataInput.split(",")[iterator].length()>2)
-						return (dataInput.replaceAll(",", ""));
-					else {
-						try {
-							throw new Exception("Number-format mismatch");
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-			}
-		}
-			break;
-			
+			return (dataInput.replaceAll(",", ""));
+
 		case Date:
 		{
-			if(dataInput.replaceAll("[0-9]+", "").replaceAll(" ", "").replace(",", "").matches("[a-zA-Z]+")) {
 				if(dataInput.substring(3, 6).compareTo("Jan")==0)
 					return dataInput.substring(0, 2)+"01"+dataInput.substring(dataInput.length()-4);
 				else if(dataInput.substring(3, 6).compareTo("Feb")==0)
@@ -85,11 +37,9 @@ public class ParseContent {
 				else if(dataInput.substring(3, 6).compareTo("Dec")==0)
 					return dataInput.substring(0, 2)+"12"+dataInput.substring(dataInput.length()-4);
 				else 
-					throw new Exception("Invalid month entry");
-			} else
-				return dataInput.replaceAll("-", "");
+					return dataInput.replaceAll("-", "");
 		}
 		}
-		return dataInput;
+		return null;
 	}
 }
