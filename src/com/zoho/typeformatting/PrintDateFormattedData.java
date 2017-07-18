@@ -1,19 +1,21 @@
 package com.zoho.typeformatting;
 
-public class DateFormatOutput extends Output {
-	public void dispOutput(String str, int formatType) {
-		if(formatType==1)
-			System.out.println(printDateFormatOne(str));
+import com.zoho.typeformatting.DateFormatChoiceValidator.DateFormatChoice;
+
+public class PrintDateFormattedData extends PrintFormattedData {
+	public void dispFormattingResult(String dataInput, Enum<? extends FormatChoices> UserFormatChoice) {
+		if(UserFormatChoice == DateFormatChoice.DD_MM_YYYY)
+			System.out.println(formatDateToMethodOne(dataInput));
 		else
-			System.out.println(printDateFormatTwo(str));
+			System.out.println(formatDateToMethodTwo(dataInput));
 	}
 	
-	public String printDateFormatOne(String date) {
+	public String formatDateToMethodOne(String date) {
 		return date.substring(0, 2)+"-"+date.substring(2, 4)+"-"+date.substring(date.length() - 4);
 	}
 	
-	public String printDateFormatTwo(String date) {
-		return date.substring(0, 2)+"-"+getMonth(date.substring(2,4))+"-"+date.substring(date.length() - 4);
+	public String formatDateToMethodTwo(String date) {
+		return date.substring(0, 2)+" "+getMonth(date.substring(2,4))+", "+date.substring(date.length() - 4);
 	}
 	
 	public String getMonth(String month) {
